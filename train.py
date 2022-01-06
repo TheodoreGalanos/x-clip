@@ -45,7 +45,7 @@ def check_args(args):
         os.makedirs(os.path.dirname('./checkpoints/x_clip.pt'), exist_ok=True)
         
 def main():
-    #wandb_run = wandb.init(project='x-clip', config=args)
+    wandb_run = wandb.init(project='x-clip', config=args)
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
