@@ -16,7 +16,7 @@ def clip_model_from_args():
     return x_clip.CLIP(
         dim_text = 512,
         dim_image = 512,
-        dim_latent = 512,
+        dim_latent = 1024,
         num_text_tokens = 49408,
         text_enc_depth = 6,
         text_seq_len = 256,
@@ -67,7 +67,7 @@ def main():
                                           bpe_tokenizer=_tokenizer)
     image_text_dataloader = torch.utils.data.DataLoader(
         image_text_dataset,
-        batch_size=8,
+        batch_size=64,
         shuffle=True,
         num_workers=0)
 
@@ -77,7 +77,7 @@ def main():
     # Train
     for epoch in tqdm.tqdm(range(100)):
         current_epoch_pbar = tqdm.tqdm(enumerate(image_text_dataloader), 
-                                       total=len(image_text_dataloader), unit='batch', unit_scale=8)
+                                       total=len(image_text_dataloader), unit='batch', unit_scale=64)
         for batch_idx, (text, images) in current_epoch_pbar:
             with autocast(enabled=True):
                 text, images = map(lambda t: t.cuda(), (text, images))
